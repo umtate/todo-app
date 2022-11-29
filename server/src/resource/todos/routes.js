@@ -1,6 +1,6 @@
 import express from "express";
 import { Status } from "../../utils/utils.js";
-import {  getTodosController, getTodoController, updateTodoDescription, updateTodoStatus, createTodo} from "./controller.js";
+import {  getTodosController, getTodoController, updateTodoDescription, updateTodoStatus, createTodo, deleteTodo} from "./controller.js";
 
 const todoRouter = express.Router();
 
@@ -24,9 +24,9 @@ todoRouter.route("/todo/:todoId").get((req, res) => {
 });
 
 todoRouter.route("/:todoId/deleteTodo").delete((req, res) => {
-  const todo = req.body;
+  const id =  req.params.todoId;;
   (async () => {
-    const dbRes = await createTodo(todo)
+    const dbRes = await deleteTodo(id)
     res.json(dbRes)
   })()
 });
@@ -41,7 +41,7 @@ todoRouter.route("/createTodo").post((req, res) => {
   })()
 });
 
-todoRouter.route("/:todoId/markTodoCompleted").get((req, res) => {
+todoRouter.route("/:todoId/markTodoCompleted").put((req, res) => {
   const id = req.params.todoId;
   (async () => {
     const dbRes = await updateTodoStatus( Status.Complete, id)
@@ -49,7 +49,7 @@ todoRouter.route("/:todoId/markTodoCompleted").get((req, res) => {
   })()
 });
 
-todoRouter.route("/:todoId/markTodoUncompleted").get((req, res) => {
+todoRouter.route("/:todoId/markTodoUncompleted").put((req, res) => {
   const id = req.params.todoId;
   (async () => {
     const dbRes = await updateTodoStatus(Status.Uncomplete, id)

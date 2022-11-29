@@ -16,32 +16,18 @@ export const getTodosController = async (userId) => {
 };
 
 export const deleteTodo = async (id) => {
-  sequelize
-    .sync()
-    .then(() => {
-      Todo.destroy({
-        where: {
-          id: id,
-        },
-      })
-        .then(() => {
-          console.log("Successfully deleted record.");
-        })
-        .catch((error) => {
-          console.error("Failed to delete record : ", error);
-        });
-    })
-    .catch((error) => {
-      console.error("Unable to create table : ", error);
-    });
+  try {
+    const del = await Todo.destroy({where: { todoId: id}});
+    return del;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const updateTodoStatus = async (status, id) => {
+  console.log(status, id)
   try {
-    const todo = await Todo.update(
-      { status },
-      { where: { todoId: id } }
-    );
+    const todo = await Todo.update({ status: status }, { where: { todoId: id } });
     return todo;
   } catch (err) {
     console.log(err);
