@@ -1,8 +1,6 @@
 import sequelize from "../../config/db.js";
 import { DataTypes } from "sequelize";
 
-const { Sequelize } = sequelize;
-
 const Todo = sequelize.define("todo", {
   status: {
     type: DataTypes.STRING,
@@ -13,7 +11,7 @@ const Todo = sequelize.define("todo", {
     allowNull: false,
   },
   description: {
-    type: DataTypes.DATEONLY,
+    type: DataTypes.STRING,
   },
   todoId: {
     type: DataTypes.INTEGER,
