@@ -36,10 +36,10 @@ export const deleteTodo = async (id) => {
     });
 };
 
-export const updateTodoStatus = async (todoReq, id) => {
+export const updateTodoStatus = async (status, id) => {
   try {
     const todo = await Todo.update(
-      { status: todoReq.status },
+      { status },
       { where: { todoId: id } }
     );
     return todo;
