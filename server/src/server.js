@@ -6,6 +6,7 @@ import session from "express-session";
 import cors from "cors"
 import sequelize from "./config/db.js";
 import passportConfig from "./config/passport.js";
+import { APPSECRET } from "./config/environment.js";
 
 const app = express();
 
@@ -23,7 +24,7 @@ sequelize.authenticate().then(() => {
 });
 
 app.use(cookieParser());
-app.use(session({secret: "thisisasecret"}))
+app.use(session({secret: APPSECRET}))
 passportConfig(app)
 app.use(router);
 
